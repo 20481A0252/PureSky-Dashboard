@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PURESKY ENERGY - Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #bee7e467);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo-section {
+      margin-bottom: 30px;
+    }
+
+    .logo-section h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #4a148c;
+      font-weight: bold;
+    }
+
+    .logo-section p {
+      margin: 5px 0 0 0;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #4a148c;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #7b1fa2;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #7b1fa2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      background-color: #4a148c;
+    }
+
+    .login-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .success-message {
+      color: #388e3c;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+      margin: 30px 0;
+    }
+
+    .footer-text {
+      color: #666;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-section">
+      <h1>PURESKY ENERGY</h1>
+      <p>Dashboard Login</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        Login
+      </button>
+
+      <div class="error-message" id="errorMessage">
+        Invalid username or password. Please try again.
+      </div>
+
+      <div class="success-message" id="successMessage">
+        Login successful! Redirecting to dashboard...
+      </div>
+    </form>
+
+    <div class="footer-text">
+      © 2024 PURESKY ENERGY. All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    // Single credential for login
+    const VALID_CREDENTIALS = {
+      username: 'admin',
+      password: 'puresky2024'
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      const loginBtn = document.getElementById('loginBtn');
+
+      // Hide previous messages
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      // Disable button during processing
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in...';
+
+      // Simulate processing delay
+      setTimeout(() => {
+        if (username === VALID_CREDENTIALS.username && password === VALID_CREDENTIALS.password) {
+          // Successful login
+          successMessage.style.display = 'block';
+          
+          // Store login status
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('loginTime', new Date().toISOString());
+          
+          // Redirect to dashboard after 1.5 seconds
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          // Failed login
+          errorMessage.style.display = 'block';
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Login';
+          
+          // Clear password field
+          document.getElementById('password').value = '';
+        }
+      }, 1000);
+    });
+
+    // Check if already logged in
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

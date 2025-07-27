@@ -1,0 +1,14 @@
+This is a sample Excel file structure for testing.
+
+Create an Excel file (.xlsx) with the following structure:
+
+Sheet 1:
+| Issue ID | Description | Status | Priority | Date | Assigned To | Location |
+|----------|-------------|--------|----------|------|-------------|----------|
+| ISS-001  | Inverter malfunction at Unit A | Open | High | 2024-01-15 | John Doe | North Section |
+| ISS-002  | Panel cleaning needed | Closed | Medium | 2024-01-10 | Jane Smith | South Section |
+| ISS-003  | Connection issue in junction box | Open | Low | 2024-01-12 | Mike Johnson | East Section |
+| ISS-004  | Monitoring system offline | Open | High | 2024-01-14 | Sarah Wilson | Control Room |
+| ISS-005  | Weather damage to panels | Closed | Medium | 2024-01-08 | Tom Brown | West Section |
+
+Save this as "sample_issues.xlsx" and use it for testing. 
