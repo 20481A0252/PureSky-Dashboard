@@ -4,7 +4,7 @@ A modern web dashboard for managing energy project issues with Excel data integr
 
 ## Features
 
-- **Energy Project Cards**: Display 16 energy sites with their power specifications
+- **Energy Project Cards**: Display 35 energy sites with their power specifications
 - **Excel Data Integration**: Load and display data from Excel files (.xlsx, .xls)
 - **Modal Interface**: Clean, modern modal popup for viewing data
 - **Export Functionality**: Export displayed data back to Excel format
