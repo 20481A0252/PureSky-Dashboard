@@ -1,104 +1,180 @@
-# PURESKY ENERGY Dashboard
+# 🌟 PURESKY ENERGY Dashboard
 
-A modern web dashboard for managing energy project issues with Excel data integration.
+![Dashboard Preview](https://img.shields.io/badge/Status-Active-brightgreen) ![Version](https://img.shields.io/badge/Version-2.0-blue) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## Features
+A comprehensive, modern web dashboard for managing energy projects and tracking issues across PURESKY ENERGY's renewable energy portfolio. Built with vanilla JavaScript, HTML5, and CSS3 for optimal performance and compatibility.
 
-- **Energy Project Cards**: Display 35 energy sites with their power specifications
-- **Excel Data Integration**: Load and display data from Excel files (.xlsx, .xls)
-- **Modal Interface**: Clean, modern modal popup for viewing data
-- **Export Functionality**: Export displayed data back to Excel format
-- **Responsive Design**: Works on desktop and mobile devices
+## 🚀 Features
 
-## How to Use
+### 🔐 **Secure Authentication System**
+- Login protection with session management
+- 24-hour automatic session timeout
+- Secure logout functionality
+- Credential: `admin` / `puresky2024`
 
-### 1. Opening the Dashboard
-- Open `index.html` in your web browser
-- The dashboard will display all energy project cards
+### ⚡ **Energy Portfolio Management**
+- **35 Energy Sites**: Complete portfolio including solar installations and energy storage systems
+- **Detailed Specifications**: Power output (MWp/MW) and storage capacity (MWh) for each site
+- **Site Categories**: Solar farms, ground mounts, and hybrid storage systems
+- **Real-time Status**: Visual indicators for sites with active issues
 
-### 2. Loading Excel Data
-1. Click on any issue button (Open Issues, Closed Issues, Previous Issues) on any project card
-2. A modal will open with a file selection option
-3. Click "Select Excel File" and choose your Excel file (.xlsx or .xls)
-4. The data will be loaded and displayed in a table format
+### 📊 **Advanced Issue Tracking**
+- **Comprehensive Overview**: "All Issues" button to view system-wide status
+- **Smart Categorization**: Automatic separation of open and closed issues
+- **Priority Management**: Color-coded priority levels (High/Medium/Low)
+- **Detailed Information**: Site, description, assignee, dates, and status tracking
+- **Export Functionality**: Download complete issue reports as Excel files
 
-### 3. Expected Excel File Format
-Your Excel file should have:
-- **Header row**: Column titles (e.g., "Issue ID", "Description", "Status", "Date", etc.)
-- **Data rows**: Actual issue data
-- **First sheet**: The application reads the first sheet of the Excel file
+### 🔍 **Intelligent Search System**
+- **Real-time Filtering**: Instant site search as you type
+- **Smart Matching**: Case-insensitive partial name matching
+- **Live Results**: Dynamic counter showing filtered results
+- **Quick Clear**: Escape key to instantly reset search
+- **Responsive Design**: Works seamlessly on all devices
 
-### Example Excel Structure:
-| Issue ID | Description | Status | Priority | Date | Assigned To |
-|----------|-------------|--------|----------|------|-------------|
-| ISS-001  | Inverter malfunction | Open | High | 2024-01-15 | John Doe |
-| ISS-002  | Panel cleaning needed | Closed | Medium | 2024-01-10 | Jane Smith |
-| ISS-003  | Connection issue | Open | Low | 2024-01-12 | Mike Johnson |
+### 📈 **Excel Integration**
+- **File Upload**: Support for .xlsx and .xls formats
+- **Data Processing**: Automatic parsing and validation
+- **Table Display**: Clean, sortable data presentation
+- **Export Options**: Download processed data in Excel format
+- **Error Handling**: Graceful handling of file format issues
 
-### 4. Features Available
-- **View Data**: See all Excel data in a formatted table
-- **Data Summary**: Shows row and column count
-- **Load Different File**: Switch to a different Excel file
-- **Export Data**: Download the current data as a new Excel file
-- **Close Modal**: Click X, press Escape, or click outside the modal
+## 🏗️ **Architecture**
 
-## Technical Details
+### **Tech Stack**
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3
+- **Libraries**: SheetJS (XLSX processing)
+- **Storage**: LocalStorage for session management
+- **Design**: Responsive CSS Grid and Flexbox
 
-### Files Structure
-- `index.html` - Main dashboard page with styling
-- `script.js` - JavaScript functionality for Excel handling
-- `README.md` - This documentation file
+### **File Structure**
+```
+PSE Dashboard/
+├── index.html          # Main dashboard interface
+├── login.html          # Authentication page
+├── script.js           # Core functionality
+├── README.md           # Documentation
+├── netlify.toml        # Deployment configuration
+└── .gitignore          # Git ignore rules
+```
 
-### Dependencies
-- **SheetJS (XLSX)**: For Excel file reading and writing
-- **CDN Link**: `https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js`
+## 🚀 **Quick Start**
 
-### Browser Compatibility
-- Modern browsers with FileReader API support
-- Chrome, Firefox, Safari, Edge (latest versions)
+### **Option 1: Local Development**
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/pse-dashboard.git
+cd pse-dashboard
 
-## Energy Projects Included
+# Start local server (Python)
+python -m http.server 8000
 
-The dashboard includes 16 energy projects:
+# Or use Node.js
+npx serve .
 
-1. **Adirondack - Connecticut River** (7.06MWp / 5.00MW)
-2. **Blossom B - Hamilton Brook** (6.44MWp / 4.50MW)
-3. **Clayton** (1.68MWp / 1.25MW)
-4. **Dover - Buckmaster Pond** (1.42MWp / 1.00MW)
-5. **Dudley Ground Mount (1-3)** (4.11MWp / 3.00MW)
-6. **Gouverneur I** (1.94MWp / 1.48MW)
-7. **Grand Island A** (2.11MWp / 1.62MW)
-8. **Joe Jenny** (2.04MWp / 1.50MW)
-9. **Lake Waconia** (2.69MWp / 2.00MW)
-10. **Mendon Cape Road - Box Pond** (3.24MWp / 2.60MW)
-11. **New Germany** (1.30MWp / 1.00MW)
-12. **Veseli** (1.30MWp / 1.00MW)
-13. **Westport A - Bass River** (2.79MWp / 2.00MW)
-14. **Zumbro** (1.30MWp / 1.00MW)
-15. **Canandaigua** (4.62MWp / 4.0MW)
-16. **Cedar Hill Solar** (7.51MWp / 5.0MW)
+# Open browser
+open http://localhost:8000
+```
 
-## Troubleshooting
+### **Option 2: Direct File Access**
+1. Download or clone the repository
+2. Open `index.html` in your web browser
+3. Login with credentials: `admin` / `puresky2024`
 
-### Common Issues:
-1. **File not loading**: Ensure the file is a valid Excel format (.xlsx or .xls)
-2. **No data displayed**: Check if your Excel file has data in the first sheet
-3. **Modal not closing**: Try pressing the Escape key or clicking outside the modal
-4. **Export not working**: Make sure you have data loaded before trying to export
+## 📋 **Usage Guide**
 
-### Browser Console Commands:
-- `getStoredData()` - View all loaded Excel data
-- `clearStoredData()` - Clear all stored data
+### **1. Authentication**
+- Navigate to the dashboard URL
+- Enter credentials: `admin` / `puresky2024`
+- Session automatically expires after 24 hours
 
-## Customization
+### **2. Site Management**
+- Browse 35 energy sites with detailed specifications
+- Use search bar to quickly find specific sites
+- Click on issue buttons to manage site-specific problems
 
-You can easily customize the dashboard by:
-- Modifying the `energySites` array in `script.js` to add/remove projects
-- Updating the CSS styles in `index.html` for different colors/themes
-- Adding more functionality to the Excel data processing
+### **3. Issue Tracking**
+- Upload Excel files with issue data
+- View comprehensive "All Issues" overview
+- Switch between open and closed issues
+- Export complete reports
 
-## Security Notes
+### **4. Excel File Format**
+Your Excel files should include these columns:
+| Column | Description | Required |
+|--------|-------------|----------|
+| Site/Site Name | Energy site identifier | ✅ |
+| Issue/Description | Problem description | ✅ |
+| Status/Issue Status | Current status | ✅ |
+| Priority | High/Medium/Low | ⚪ |
+| Assignee/Assigned To | Responsible person | ⚪ |
+| Date Created/Created | Issue creation date | ⚪ |
+| Date Resolved/Resolved | Resolution date | ⚪ |
 
-- All Excel processing happens client-side in the browser
-- No data is sent to external servers
-- Files are read locally and not uploaded anywhere 
+## 🌍 **Energy Sites Portfolio**
+
+The dashboard manages 35 renewable energy installations:
+
+**Solar Installations:**
+- Adirondack, Blossom B, Clayton, Dover, Dudley
+- Cedar Hill Solar, Clover Meadow, Oak Hill Solar 1 & 2
+- White River Solar, Elmbrook Solar, and more
+
+**Hybrid Systems (Solar + Storage):**
+- Cotuit: 4.36MWp / 3.11MW + 1.50MW / 4.2MWh
+- East Brookfield Adams: 7.03MWp / 4.66MW + 3.0MW / 6.3MWh
+- Oak Hill Solar: 8.30MWp / 5.0MW + 4.50MW / 9MWh each
+
+## 🔧 **Configuration**
+
+### **Authentication Settings**
+```javascript
+// In login.html - modify credentials
+if (username === 'admin' && password === 'puresky2024') {
+    // Update credentials here
+}
+```
+
+### **Session Timeout**
+```javascript
+// In index.html - modify timeout duration
+const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours
+```
+
+## 🚀 **Deployment**
+
+### **Netlify (Recommended)**
+1. Connect your GitHub repository to Netlify
+2. Deploy automatically with included `netlify.toml`
+3. Custom domain and HTTPS included
+
+### **Other Platforms**
+- **GitHub Pages**: Enable in repository settings
+- **Vercel**: Import repository and deploy
+- **Firebase Hosting**: Use Firebase CLI
+
+## 🤝 **Contributing**
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 **Support**
+
+For support, email support@pureskyenergy.com or create an issue in this repository.
+
+## 🙏 **Acknowledgments**
+
+- Built for PURESKY ENERGY renewable portfolio management
+- SheetJS library for Excel processing
+- Modern web standards for optimal performance
+
+---
+
+**Made with ❤️ for sustainable energy management**
