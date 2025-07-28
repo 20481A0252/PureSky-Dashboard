@@ -42,6 +42,7 @@ let excelData = [];
 document.addEventListener("DOMContentLoaded", () => {
   createDashboard();
   setupModalEvents();
+  setupSearchFunctionality();
 });
 
 function createDashboard() {
@@ -472,4 +473,67 @@ function exportAllIssues() {
   const ws = XLSX.utils.json_to_sheet(excelData);
   XLSX.utils.book_append_sheet(wb, ws, 'All PURESKY Issues');
   XLSX.writeFile(wb, `PURESKY_All_Issues_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+// Search functionality
+function setupSearchFunctionality() {
+  const searchInput = document.getElementById('siteSearch');
+  const searchResults = document.getElementById('searchResults');
+  
+  if (!searchInput) return;
+  
+  // Update search results info
+  updateSearchResults('');
+  
+  searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    filterSites(searchTerm);
+    updateSearchResults(searchTerm);
+  });
+  
+  // Clear search on Escape key
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      e.target.value = '';
+      filterSites('');
+      updateSearchResults('');
+    }
+  });
+}
+
+function filterSites(searchTerm) {
+  const siteCards = document.querySelectorAll('.site-card');
+  let visibleCount = 0;
+  
+  siteCards.forEach(card => {
+    const siteName = card.querySelector('h3').textContent.toLowerCase();
+    const isVisible = searchTerm === '' || siteName.includes(searchTerm);
+    
+    if (isVisible) {
+      card.style.display = 'block';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  
+  return visibleCount;
+}
+
+function updateSearchResults(searchTerm) {
+  const searchResults = document.getElementById('searchResults');
+  const totalSites = energySites.length;
+  
+  if (searchTerm === '') {
+    searchResults.textContent = `Showing all ${totalSites} energy sites`;
+  } else {
+    const visibleCount = filterSites(searchTerm);
+    if (visibleCount === 0) {
+      searchResults.innerHTML = `<span style="color: #d32f2f;">No sites found matching "${searchTerm}"</span>`;
+    } else if (visibleCount === 1) {
+      searchResults.innerHTML = `<span style="color: #388e3c;">Found 1 site matching "${searchTerm}"</span>`;
+    } else {
+      searchResults.innerHTML = `<span style="color: #388e3c;">Found ${visibleCount} sites matching "${searchTerm}"</span>`;
+    }
+  }
 }
