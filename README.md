@@ -63,7 +63,7 @@ PSE Dashboard/
 ### **Option 1: Local Development**
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pse-dashboard.git
+git clone https://github.com/20481A0252/pse-dashboard.git
 cd pse-dashboard
 
 # Start local server (Python)
@@ -131,7 +131,7 @@ The dashboard manages 35 renewable energy installations:
 ```javascript
 // In login.html - modify credentials
 if (username === 'admin' && password === 'puresky2024') {
-    // Update credentials here
+    
 }
 ```
 
@@ -167,7 +167,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 **Support**
 
-For support, email support@pureskyenergy.com or create an issue in this repository.
+For support, email pavankumarm@amgsol.com or create an issue in this repository.
 
 ## 🙏 **Acknowledgments**
 
