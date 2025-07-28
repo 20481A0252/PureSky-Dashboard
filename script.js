@@ -299,3 +299,177 @@ function clearStoredData() {
     }
   });
 }
+
+// Function to show all issues across all sites
+function showAllIssuesModal() {
+  if (!excelData || excelData.length === 0) {
+    alert('No issue data available. Please upload an Excel file first.');
+    return;
+  }
+
+  // Separate open and closed issues
+  const openIssues = [];
+  const closedIssues = [];
+
+  excelData.forEach(row => {
+    const status = row['Status'] || row['Issue Status'] || '';
+    const site = row['Site'] || row['Site Name'] || 'Unknown Site';
+    const issue = row['Issue'] || row['Description'] || 'No description';
+    const priority = row['Priority'] || 'Medium';
+    const assignee = row['Assignee'] || row['Assigned To'] || 'Unassigned';
+    const dateCreated = row['Date Created'] || row['Created'] || 'Unknown';
+    const dateResolved = row['Date Resolved'] || row['Resolved'] || '';
+
+    const issueData = {
+      site,
+      issue,
+      priority,
+      assignee,
+      dateCreated,
+      dateResolved,
+      status
+    };
+
+    if (status.toLowerCase().includes('open') || status.toLowerCase().includes('active') || status.toLowerCase().includes('pending')) {
+      openIssues.push(issueData);
+    } else if (status.toLowerCase().includes('closed') || status.toLowerCase().includes('resolved') || status.toLowerCase().includes('completed')) {
+      closedIssues.push(issueData);
+    }
+  });
+
+  // Create modal content
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  
+  modalTitle.textContent = 'PURESKY All Issues Overview';
+  
+  let content = `
+    <div style="margin-bottom: 20px;">
+      <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center; flex: 1;">
+          <h3 style="margin: 0; color: #1976d2;">Open Issues</h3>
+          <div style="font-size: 24px; font-weight: bold; color: #d32f2f;">${openIssues.length}</div>
+        </div>
+        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center; flex: 1;">
+          <h3 style="margin: 0; color: #388e3c;">Closed Issues</h3>
+          <div style="font-size: 24px; font-weight: bold; color: #388e3c;">${closedIssues.length}</div>
+        </div>
+        <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center; flex: 1;">
+          <h3 style="margin: 0; color: #7b1fa2;">Total Issues</h3>
+          <div style="font-size: 24px; font-weight: bold; color: #7b1fa2;">${openIssues.length + closedIssues.length}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Add tabs for switching between open and closed issues
+  content += `
+    <div style="margin-bottom: 20px;">
+      <button onclick="showIssueTab('open')" id="openTab" style="padding: 10px 20px; margin-right: 10px; background: #1976d2; color: white; border: none; border-radius: 5px; cursor: pointer;">Open Issues</button>
+      <button onclick="showIssueTab('closed')" id="closedTab" style="padding: 10px 20px; background: #388e3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Closed Issues</button>
+      <button onclick="exportAllIssues()" style="padding: 10px 20px; margin-left: 10px; background: #7b1fa2; color: white; border: none; border-radius: 5px; cursor: pointer;">Export All</button>
+    </div>
+  `;
+
+  // Open issues table
+  content += `<div id="openIssuesContent">`;
+  if (openIssues.length > 0) {
+    content += renderIssuesTable(openIssues, 'Open Issues');
+  } else {
+    content += '<p style="text-align: center; color: #666; font-style: italic;">No open issues found.</p>';
+  }
+  content += `</div>`;
+
+  // Closed issues table (initially hidden)
+  content += `<div id="closedIssuesContent" style="display: none;">`;
+  if (closedIssues.length > 0) {
+    content += renderIssuesTable(closedIssues, 'Closed Issues');
+  } else {
+    content += '<p style="text-align: center; color: #666; font-style: italic;">No closed issues found.</p>';
+  }
+  content += `</div>`;
+
+  modalBody.innerHTML = content;
+  document.getElementById('dataModal').style.display = 'block';
+}
+
+// Function to render issues table
+function renderIssuesTable(issues, title) {
+  let table = `
+    <div style="margin-bottom: 20px;">
+      <h3 style="color: #333; margin-bottom: 15px;">${title} (${issues.length})</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <thead>
+            <tr style="background: #f5f5f5;">
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Site</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Issue</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Priority</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Assignee</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Created</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+  `;
+
+  issues.forEach((issue, index) => {
+    const priorityColor = issue.priority.toLowerCase() === 'high' ? '#d32f2f' : 
+                         issue.priority.toLowerCase() === 'medium' ? '#f57c00' : '#388e3c';
+    
+    table += `
+      <tr style="${index % 2 === 0 ? 'background: #fafafa;' : 'background: white;'}">
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">${issue.site}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; max-width: 300px; word-wrap: break-word;">${issue.issue}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">
+          <span style="background: ${priorityColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${issue.priority}</span>
+        </td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">${issue.assignee}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">${issue.dateCreated}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee;">${issue.status}</td>
+      </tr>
+    `;
+  });
+
+  table += `
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  return table;
+}
+
+// Function to switch between issue tabs
+function showIssueTab(type) {
+  const openContent = document.getElementById('openIssuesContent');
+  const closedContent = document.getElementById('closedIssuesContent');
+  const openTab = document.getElementById('openTab');
+  const closedTab = document.getElementById('closedTab');
+
+  if (type === 'open') {
+    openContent.style.display = 'block';
+    closedContent.style.display = 'none';
+    openTab.style.background = '#1976d2';
+    closedTab.style.background = '#666';
+  } else {
+    openContent.style.display = 'none';
+    closedContent.style.display = 'block';
+    openTab.style.background = '#666';
+    closedTab.style.background = '#388e3c';
+  }
+}
+
+// Function to export all issues to Excel
+function exportAllIssues() {
+  if (!excelData || excelData.length === 0) {
+    alert('No data to export.');
+    return;
+  }
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(excelData);
+  XLSX.utils.book_append_sheet(wb, ws, 'All PURESKY Issues');
+  XLSX.writeFile(wb, `PURESKY_All_Issues_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
