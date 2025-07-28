@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PURESKY ENERGY</title>
+  <title>PURESKY ENERGY Dashboard</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -239,6 +239,7 @@
     <div class="logo-placeholder">PSE</div>
     <h1>PURESKY ENERGY</h1>
     <div class="logo-placeholder">AGS</div>
+    <button id="allIssuesBtn" style="position: absolute; top: 20px; right: 120px; padding: 10px 20px; background-color: #1976d2; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">All Issues</button>
     <button id="logoutBtn" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background-color: #d32f2f; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Logout</button>
   </div>
 
@@ -272,6 +273,11 @@
         localStorage.removeItem('loginTime');
         window.location.href = 'login.html';
       }
+    });
+
+    // All Issues functionality
+    document.getElementById('allIssuesBtn').addEventListener('click', function() {
+      showAllIssuesModal();
     });
 
     // Session timeout (optional - 24 hours)
